@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     01/05/2010 10:58:21                                                        
+
+     aula2    
+     Projeto da segunda aula da especialização da ETI.
+                   
+     dobau                                                                
+     ====================================================================== -->
+<project name="dobau" default="default">
+	<description>
+            Projeto da segunda aula da especialização da ETI.
+    </description>
+
+	<target name="default" depends="xxx" />
+
+	<target name="jar" depends="compile" description="Cria arquivo jar">
+		<delete file="build/dobau.jar" />
+		<delete file="build/lib" />
+		<path id="build-classpath">
+			<fileset dir="lib">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<manifestclasspath property="lib.list" jarfile="build/dobau.jar">
+			<classpath refid="build-classpath" />
+		</manifestclasspath>
+		<copy todir="build/lib">
+			<fileset dir="lib" />
+		</copy>
+		<jar jarfile="build/dobau.jar" basedir="build">
+			<manifest>
+				<attribute name="Class-Path" value=". ${lib.list}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<path id="compile.classpath">
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="build-classpath">
+		<fileset dir="${basedir}">
+			<include name="lib/*.jar" />
+		</fileset>
+	</path>
+
+	<manifestclasspath property="lib.list" jarfile="dobau.jar">
+	   <classpath refid="build-classpath" />
+	</manifestclasspath>
+
+	<target name="xxx" depends="compile">
+		<!-- Convert project class path to string property -->
+		<jar jarfile="dobau.jar">
+			<fileset dir="build" />
+			<manifest>
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+
+
+	<!-- ================================== -->
+	<!--      target: depends               -->
+	<!-- ================================== -->
+	<target name="compile" depends="init" description="Compila projeto">
+		<javac srcdir="src" destdir="build" classpathref="compile.classpath" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="build" />
+	</target>
+
+</project>

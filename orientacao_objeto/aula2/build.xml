@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     01/05/2010 10:58:21                                                        
+
+     aula2    
+     Projeto da segunda aula da especialização da ETI.
+                   
+     dobau                                                                
+     ====================================================================== -->
+<project name="aula2" default="default">
+	<description>
+            Projeto da segunda aula da especialização da ETI.
+    </description>
+
+	<target name="default" depends="questao1, questao2, questao3" />
+
+	<target name="questao1" depends="compile" description="Primeira questão">
+		<jar destfile="build/questao1.jar">
+			<fileset>
+				<includesfile name="**/questao1/*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="questao2" depends="compile" description="Segunda questão">
+		<jar destfile="build/questao2.jar">
+			<fileset dir="build">
+				<include name="**/questao2/*" />
+			</fileset>
+			<manifest>
+				<attribute name="Main-Class" value="aula.dois.questao2.CriaAcao" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="questao3" depends="compile" description="Terceira questão">
+		<jar destfile="build/questao3.jar">
+			<fileset>
+				<includesfile name="**/questao3/*" />
+			</fileset>
+			<manifest>
+				<section name="aula/dois/questao2/CriaAcao" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile" depends="init">
+		<javac srcdir="src" destdir="build" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="build" />
+	</target>
+
+</project>
